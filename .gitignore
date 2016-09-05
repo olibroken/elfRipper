@@ -1,6 +1,7 @@
 # clion stuff
 build
 .idea
+.DS_Store
 
 # ignore pdfs
 *.[P]df
