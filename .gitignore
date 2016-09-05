@@ -1,3 +1,7 @@
+# clion stuff
+build
+.idea
+
 # ignore pdfs
 *.[P]df
 
