@@ -1,74 +1,58 @@
 #pragma once
-
 //
-// Created by Oliver James on 04/09/2016.
+// Created by Oliver James on 05/09/2016.
 //
 
 #include <stdint.h>
 
 namespace ELF {
 
-    struct elf_header32 {
-        uint8_t EI_MAG0[4];      // EI_MAG0 sig for elf files: 0x7f, 0x45, 0x4c, 0x46 (ELF)
-        uint8_t EI_CLASS;        // 1 = 32 | 2 = 64
-        uint8_t EI_DATA;            // 1 = little | 2 = big
-        uint8_t EI_VERSION;         // should always be 1?
-        uint8_t EI_OSABI;           // abi type.. i assume this will probably be 0x03?
-        uint8_t EI_ABIVERSION;     // ignored if linux
-        uint8_t EI_PAD[7];     // EI_PAD.....
-        uint16_t e_type;       // reloc, exec, shared, core?
-        uint16_t e_machine;       // machine type.. should be arm in this case (0x28)
-        uint32_t e_version;     // not sure?
+    struct Elf32_Ehdr {
+        uint8_t	    e_ident[16];
+        uint16_t	e_type;
+        uint16_t	e_machine;
+        uint32_t	e_version;
 
-        uint32_t e_entry;       // entrypoint
-        uint32_t e_phoff;       // start of header table
-        uint32_t e_shoff;       // start of section table
+        uint32_t	e_entry;  /* Entry point */
+        uint32_t	e_phoff;
+        uint32_t	e_shoff;
 
-        uint32_t e_flags;       // architecture dependant flags
-        uint16_t e_ehsize;      // size of header
-
-        uint16_t e_phentsize;   // size of program header
-        uint16_t e_phnum;       // program entry count
-
-        uint16_t e_shentsize;   // section header size
-        uint16_t e_shnum;       // section entry count
-        uint16_t e_shstrndx;    // section name index
+        uint32_t	e_flags;
+        uint16_t	e_ehsize;
+        uint16_t	e_phentsize;
+        uint16_t	e_phnum;
+        uint16_t	e_shentsize;
+        uint16_t	e_shnum;
+        uint16_t	e_shstrndx;
     };
 
-    struct elf_header64 {
-        uint8_t EI_MAG0[4];      // EI_MAG0 sig for elf files: 0x7f, 0x45, 0x4c, 0x46 (ELF)
-        uint8_t EI_CLASS;        // 1 = 32 | 2 = 64
-        uint8_t EI_DATA;            // 1 = little | 2 = big
-        uint8_t EI_VERSION;         // should always be 1?
-        uint8_t EI_OSABI;           // abi type.. i assume this will probably be 0x03?
-        uint8_t EI_ABIVERSION;     // ignored if linux
-        uint8_t EI_PAD[7];     // EI_PAD.....
-        uint16_t e_type;       // reloc, exec, shared, core?
-        uint16_t e_machine;       // machine type.. should be arm in this case (0x28)
-        uint32_t e_version;     // not sure?
-
-        uint64_t e_entry;       // entrypoint
-        uint64_t e_phoff;       // start of header table
-        uint64_t e_shoff;       // start of section table
-
-        uint32_t e_flags;       // architecture dependant flags
-        uint16_t e_ehsize;      // size of header
-
-        uint16_t e_phentsize;   // size of program header
-        uint16_t e_phnum;       // program entry count
-
-        uint16_t e_shentsize;   // section header size
-        uint16_t e_shnum;       // section entry count
-        uint16_t e_shstrndx;    // section name index
+    struct Elf64_Ehdr : Elf32_Ehdr {
+        uint64_t	e_entry;  /* Entry point */
+        uint64_t	e_phoff;
+        uint64_t	e_shoff;
     };
 
-    struct elf_section_header32 {
-        uint32_t name;      // offset to section name string
-        uint32_t type;      // type of header
-        uint32_t flags;     // ?
-        uint32_t address;   // address of section in memory
-        uint32_t offset;    // offset to section on disk
-        uint32_t size;      // size of section on disk
-        uint8_t padding[0x10];
+    struct Elf32_Shdr {
+        uint32_t	sh_name;
+        uint32_t	sh_type;
+        uint32_t	sh_flags;
+        uint32_t	sh_addr;
+        uint32_t	sh_offset;
+        uint32_t	sh_size;
+        uint32_t	sh_link;
+        uint32_t	sh_info;
+        uint32_t	sh_addralign;
+        uint32_t	sh_entsize;
+    };
+
+    struct Elf64_Shdr : Elf32_Shdr {
+
+        uint64_t	sh_flags;
+        uint64_t	sh_addr;
+        uint64_t	sh_offset;
+        uint64_t	sh_size;
+
+        uint64_t	sh_addralign;
+        uint64_t	sh_entsize;
     };
 }

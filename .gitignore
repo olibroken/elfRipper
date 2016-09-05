@@ -1,3 +1,6 @@
+# ignore pdfs
+*.[P]df
+
 # Prerequisites
 *.d
 
